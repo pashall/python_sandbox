@@ -23,6 +23,10 @@ class DL_mocapProjectCreator(QtGui.QDialog, mocapprojectcreator.Ui_mocapProjectC
         self.connect(self.create_btn, QtCore.SIGNAL("clicked()"), self.projectCreator)
         self.connect(self.cancel_btn, QtCore.SIGNAL("clicked()"), self.cancelApp)
         
+        #attrs
+        self.performer_one = None
+        
+        
         
     #@QtCore.Slot()
     def projectCreator(self):
@@ -37,17 +41,17 @@ class DL_mocapProjectCreator(QtGui.QDialog, mocapprojectcreator.Ui_mocapProjectC
         
         # add mocap    
         if self.mocap_radBtn.isChecked():
-            name + "_mocap"
+            name = name + str("_mocap")
             
             
         # add vcam
         if self.vcam_radBtn.isChecked():
-            name + "_vcam"
+            name = name + str("_vcam")
             
-        elif not self.mocap_radBtn.isChecked() or not self.vcam_radBtn.isChecked():
+        elif not self.mocap_radBtn.isChecked() and not self.vcam_radBtn.isChecked():
             print "Error! Shoot type not given"
                   
-     
+        print name
      
         joined = os.path.join(DL_mocapProjectCreator.cMOCAP_PATH_ROOT, name)
         print joined
@@ -56,6 +60,15 @@ class DL_mocapProjectCreator(QtGui.QDialog, mocapprojectcreator.Ui_mocapProjectC
         if not os.path.exists(joined):
             os.makedirs(joined)
         print 'Path Created'    
+        
+    def set_perf_one(self, name):
+        self.performer_one = name
+        
+    def get_perf_one(self):
+        return self.performer_one
+    
+    
+    
     
     def cancelApp(self): 
         exit()
